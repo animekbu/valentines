@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom, #ffe6f2, #ffb3d9);
+            color: #d63384;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 15px 30px;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: #ff69b4;
+            color: white;
+            position: relative;
+            z-index: 10;
+        }
+        button:hover {
+            background: #ff1493;
+        }
+        #yesBtn {
+            transition: transform 0.5s ease;
+        }
+        .hidden {
+            display: none !important;
+            visibility: hidden !important;
+        }
+        .celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .hearts {
+            font-size: 5em;
+            animation: float 2s infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .photo-gallery {
+            margin: 40px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .photo-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .photo {
+            width: 300px;
+            height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin: 10px;
+        }
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .photo p {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+        .gift-page {
+            padding: 20px;
+        }
+        .gifts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        .gift {
+            width: 150px;
+            height: 150px;
+            background: #ff69b4;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            font-size: 2em;
+        }
+        .gift:hover {
+            transform: scale(1.1);
+        }
+        .gift.opened {
+            background: #ffb3d9;
+            animation: bounce 0.5s;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        .content {
+            margin-top: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .song {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .disc {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #333 30%, #000 70%);
+            position: relative;
+            animation: rotate 3s linear infinite;
+            margin: 20px;
+        }
+        .disc::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: url('photos/album-cover.jpg') no-repeat center/cover;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        audio {
+            margin-top: 10px;
+        }
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff69b4;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: none;
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            button { font-size: 1.2em; padding: 10px 20px; }
+            .gift { width: 120px; height: 120px; }
+            .disc { width: 150px; height: 150px; }
+            .photo { width: 250px; height: 150px; }
+            .photo-row { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div id="proposal">
+        <h1>Will you be my Valentine? 💖</h1>
+        <button id="yesBtn">Yes</button>
+        <button id="noBtn">No</button>
+    </div>
+
+    <div class="photo-gallery">
+        <h2>Our Memories 📸</h2>
+        <div class="photo-row">
+            <div class="photo">
+                <img src="photos/photo1.jpg" alt="Photo 1">
+                <p>Our first Discord chat</p>
+            </div>
+            <div class="photo">
+                <img src="photos/photo2.jpg" alt="Photo 2">
+                <p>Minecraft adventures</p>
+            </div>
+        </div>
+        <div class="photo-row">
+            <div class="photo">
+                <img src="photos/photo3.jpg" alt="Photo 3">
+                <p>Late night talks</p>
+            </div>
+            <div class="photo">
+                <img src="photos/photo4.jpg" alt="Photo 4">
+                <p>Confession day</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="celebration" class="hidden celebration">
+        <div class="hearts">❤️🎉💕</div>
+    </div>
+
+    <div id="gifts" class="hidden gift-page">
+        <h1>Your Gifts! 🎁</h1>
+        <button id="resetBtn">Reset</button>
+        <div class="gifts">
+            <div class="gift" data-gift="1">🎁</div>
+            <div class="gift" data-gift="2">🎁</div>
+            <div class="gift" data-gift="3">🎁</div>
+            <div class="gift" data-gift="4">🎁</div>
+            <div class="gift" data-gift="5">🎁</div>
+            <div class="gift" data-gift="6">🎁</div>
+            <div class="gift" data-gift="7">🎁</div>
+            <div class="gift" data-gift="8">🎁</div>
+            <div class="gift" data-gift="9">🎁</div>
+            <div class="gift" data-gift="10">🎁</div>
+            <div class="gift" data-gift="11">🎁</div>
+        </div>
+        <div id="content" class="content hidden"></div>
+    </div>
+
+    <button id="backToTop">↑</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        let noClicks = 0;
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const proposal = document.getElementById('proposal');
+        const celebration = document.getElementById('celebration');
+        const gifts = document.getElementById('gifts');
+        const content = document.getElementById('content');
+        const giftBoxes = document.querySelectorAll('.gift');
+        const resetBtn = document.getElementById('resetBtn');
+        const backToTopBtn = document.getElementById('backToTop');
+
+        // Force hide on load
+        celebration.classList.add('hidden');
+        gifts.classList.add('hidden');
+        content.classList.add('hidden');
+
+        // Back to top
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        });
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        noBtn.addEventListener('click', () => {
+            noClicks++;
+            const scale = 1 + noClicks * 0.4;
+            if (scale < 3) {
+                yesBtn.style.transform = `scale(${scale})`;
+            } else {
+                yesBtn.style.position = 'fixed';
+                yesBtn.style.top = '50%';
+                yesBtn.style.left = '50%';
+                yesBtn.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                yesBtn.style.zIndex = '9999';
+            }
+        });
+
+        yesBtn.addEventListener('click', () => {
+            proposal.classList.add('hidden');
+            celebration.classList.remove('hidden');
+            if (typeof confetti !== 'undefined') {
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+            }
+            setTimeout(() => {
+                celebration.classList.add('hidden');
+                gifts.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2500);
+        });
+
+        resetBtn.addEventListener('click', () => {
+            proposal.classList.remove('hidden');
+            celebration.classList.add('hidden');
+            gifts.classList.add('hidden');
+            content.classList.add('hidden');
+            noClicks = 0;
+            yesBtn.style.transform = 'scale(1)';
+            yesBtn.style.position = 'static';
+            giftBoxes.forEach(box => box.classList.remove('opened'));
+            window.scrollTo({ top: 0 });
+        });
+
+        giftBoxes.forEach(box => {
+            box.addEventListener('click', () => {
+                const giftNum = box.dataset.gift;
+                box.classList.add('opened');
+                content.classList.remove('hidden');
+                let html = '';
+                if (giftNum == 1) {
+                    html = `
+                        <h2>🎁 Gift 1 — The Beginning</h2>
+                        <p>Dear Aini,</p>
+                        <p>10 November, 03:00.<br>I met you on Discord.</p>
+                        <p>You were there with your friends, playing together, and I somehow joined you guys.<br>Everyone was so friendly. We played Minecraft, laughed, and I tried to play some music…</p>
+                        <p>But I accidentally played a moaning sound.<br>I panicked. Left immediately.</p>
+                        <p>Still embarrassing. Still funny.</p>
+                        <p>That night felt simple, but somehow unforgettable.<br>I didn’t know it then, but that moment became the start of something special.</p>
+                    `;
+                } else if (giftNum == 2) {
+                    html = `
+                        <h2>🎁 Gift 2 — Fate</h2>
+                        <p>Dear Aini,</p>
+                        <p>If I didn’t join Discord that day,<br>If you guys didn’t play Minecraft,<br>If I didn’t come back after that embarrassing moment,<br>If I didn’t feel guilty enough to return—</p>
+                        <p>This part of my life might never have existed.</p>
+                        <p>Yet somehow, all of it happened.<br>And here we are today.</p>
+                        <p>Maybe it’s coincidence.<br>Maybe it’s fate.</p>
+                        <p>Either way—<br>I’m grateful.</p>
+                        <p>Thank you, Ais 🤍</p>
+                    `;
+                } else if (giftNum == 3) {
+                    html = `
+                        <h2>🎁 Gift 3 — Comfort</h2>
+                        <p>Dear Aini,</p>
+                        <p>You don’t even realize it,<br>but you make things feel lighter.</p>
+                        <p>Bad days don’t feel as heavy.<br>Silence doesn’t feel awkward.<br>Being myself feels safe.</p>
+                        <p>That’s rare.<br>And I don’t take it for granted.</p>
+                    `;
+                } else if (giftNum == 4) {
+                    html = `
+                        <h2>🎁 Gift 4 — Distance</h2>
+                        <p>Dear Ais,</p>
+                        <p>We’re not always in the same place.<br>Sometimes not even in the same time.</p>
+                        <p>But I still feel close to you.<br>Through screens, through words, through late nights.</p>
+                        <p>Maybe distance exists.<br>But so does us.</p>
+                        <p>And I think we’re doing okay.</p>
+                    `;
+                } else if (giftNum == 5) {
+                    html = `
+                        <h2>🎁 Gift 5 — Almost Losing You</h2>
+                        <p>Dear Ais,</p>
+                        <p>Do you remember that day?<br>27 January.</p>
+                        <p>It still hurts when I think about it.</p>
+                        <p>We almost broke up.<br>But you opened up.</p>
+                        <p>I didn’t know what to say.<br>I didn’t know how I could say something like that.</p>
+                        <p>I’m sorry, Ais.<br>Truly.</p>
+                    `;
+                } else if (giftNum == 6) {
+                    html = `
+                        <h2>🎁 Gift 6 — Our Favorite Food 😋</h2>
+                        <p>Your favorite food:<br>Ikan asam pedas 😜</p>
+                        <p>My favorite food:<br>Oseng kangkung ☺</p>
+                        <p>Simple things.<br>But somehow, it feels like us.</p>
+                    `;
+                } else if (giftNum == 7) {
+                    html = `
+                        <h2>🎁 Gift 7 — Confession Memory</h2>
+                        <p>Dear Ais,</p>
+                        <p>31 January 2025.<br>A new year.</p>
+                        <p>In a game called “Write a Letter”,<br>you confessed to me.</p>
+                        <p>Not dramatic.<br>Not perfect.</p>
+                        <p>Just honest.</p>
+                        <p>And that made it unforgettable.</p>
+                    `;
+                } else if (giftNum == 8) {
+                    html = `
+                        <h2>🎁 Gift 8 — Our Song 🎶</h2>
+                        <p>Our Favorite Song<br>“Oslo” — Matthew Hall</p>
+                        <p>Soft. Calm. Comforting.</p>
+                        <p>This song reminds me of you.<br>Like a memory that keeps playing,<br>over and over.</p>
+                        <div class="song">
+                            <div class="disc"></div>
+                            <audio controls>
+                                <source src="music/oslo.mp3" type="audio/mpeg">
+                                Your browser does not support the audio element.
+                            </audio>
+                        </div>
+                    `;
+                } else if (giftNum == 9) {
+                    html = `
+                        <h2>🎁 Gift 9 — The Future</h2>
+                        <p>Dear Aini,</p>
+                        <p>I don’t know what the future looks like for us.</p>
+                        <p>It could be the dream of our lives.<br>Or it could be the end of a dream.</p>
+                        <p
